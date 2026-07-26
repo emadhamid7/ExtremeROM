@@ -10,7 +10,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        target: [beyond0lte, beyond1lte, beyond2lte, beyondx, x1s, y2s, z3s, c1s, c2s, r8s, o1s, t2s, p3s, r9s, r0s, b0s, g0s]
+        target: [beyond0lte]
 
     steps:
       - name: Checkout repo
@@ -85,17 +85,30 @@ jobs:
           source ./buildenv.sh ${{ matrix.target }}
           ./scripts/make_rom.sh --force
 
-      - name: Upload to GoFile
+      - name: Install rclone and restore config
+        run: |
+          sudo apt update
+          sudo apt install -y rclone
+          mkdir -p ~/.config/rclone
+          cat > ~/.config/rclone/rclone.conf << 'EOF'
+          ${{ secrets.RCLONE_CONF }}
+          EOF
+
+      - name: Upload ROM to Google Drive
         run: |
           ZIP_FILE=$(find out -maxdepth 1 -type f -name "*.zip" | head -n 1)
+          FILE_NAME=$(basename "$ZIP_FILE")
 
-          RESPONSE=$(curl -s -F "file=@$ZIP_FILE" -F "token=${{ secrets.GOFILE_TOKEN }}" -F "folderId=${{ secrets.GOFILE_FOLDER_ID }}" "https://upload-eu-par.gofile.io/uploadFile")
+          rclone copy "$ZIP_FILE" mydrive:UN1CA --progress
 
-          echo "Uploaded successfully! Download link:"
-          echo "$RESPONSE" | jq -r '.data.downloadPage'
+          echo "Uploaded successfully!"
+          echo "File name: $FILE_NAME"
+
+          echo "Generating shareable link..."
+          LINK=$(rclone link "mydrive:UN1CA/$FILE_NAME")
+          echo "Download link: $LINK"
 
           echo "MD5:"
           md5sum "$ZIP_FILE"
-
           echo "SHA256:"
           sha256sum "$ZIP_FILE"
