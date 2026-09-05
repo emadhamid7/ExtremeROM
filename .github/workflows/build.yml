@@ -99,3 +99,16 @@ jobs:
 
           echo "SHA256:"
           sha256sum "$ZIP_FILE"
+
+      - name: Install rclone and restore config
+        run: |
+          sudo apt update
+          sudo apt install -y rclone
+          mkdir -p ~/.config/rclone
+          cat > ~/.config/rclone/rclone.conf << 'EOF'
+          ${{ secrets.RCLONE_CONF }}
+          EOF
+
+      - name: Upload ROM to Google Drive
+        run: |
+          rclone copy out "mydrive:Extremerom/9820/${{ matrix.target }}" --include "*.zip" --progress
