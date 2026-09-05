@@ -258,7 +258,6 @@ GENERATE_OTA_METADATA()
 GENERATE_UPDATER_SCRIPT()
 {
     local SCRIPT_FILE="$TMP_DIR/META-INF/com/google/android/updater-script"
-    local BROTLI_EXTENSION=".br"
 
     local PARTITION_COUNT=0
     local HAS_UP_PARAM=false
@@ -287,16 +286,16 @@ GENERATE_UPDATER_SCRIPT()
     [ -f "$TMP_DIR/init_boot.img" ] && HAS_INIT_BOOT=true
     [ -f "$TMP_DIR/vendor_boot.img" ] && HAS_VENDOR_BOOT=true
     [ -f "$TMP_DIR/unsparse_super_empty.img" ] && HAS_SUPER_EMPTY=true
-    [ -f "$TMP_DIR/system.new.dat${BROTLI_EXTENSION}" ] && HAS_SYSTEM=true
-    [ -f "$TMP_DIR/vendor.new.dat${BROTLI_EXTENSION}" ] && HAS_VENDOR=true && PARTITION_COUNT=$((PARTITION_COUNT + 1))
-    [ -f "$TMP_DIR/product.new.dat${BROTLI_EXTENSION}" ] && HAS_PRODUCT=true && PARTITION_COUNT=$((PARTITION_COUNT + 1))
-    [ -f "$TMP_DIR/system_ext.new.dat${BROTLI_EXTENSION}" ] && HAS_SYSTEM_EXT=true && PARTITION_COUNT=$((PARTITION_COUNT + 1))
-    [ -f "$TMP_DIR/odm.new.dat${BROTLI_EXTENSION}" ] && HAS_ODM=true && PARTITION_COUNT=$((PARTITION_COUNT + 1))
-    [ -f "$TMP_DIR/vendor_dlkm.new.dat${BROTLI_EXTENSION}" ] && HAS_VENDOR_DLKM=true && PARTITION_COUNT=$((PARTITION_COUNT + 1))
-    [ -f "$TMP_DIR/odm_dlkm.new.dat${BROTLI_EXTENSION}" ] && HAS_ODM_DLKM=true && PARTITION_COUNT=$((PARTITION_COUNT + 1))
-    [ -f "$TMP_DIR/system_dlkm.new.dat${BROTLI_EXTENSION}" ] && HAS_SYSTEM_DLKM=true && PARTITION_COUNT=$((PARTITION_COUNT + 1))
-    [ -f "$TMP_DIR/prism.new.dat${BROTLI_EXTENSION}" ] && HAS_PRISM=true
-    [ -f "$TMP_DIR/optics.new.dat${BROTLI_EXTENSION}" ] && HAS_OPTICS=true
+    [ -f "$TMP_DIR/system.img" ] && HAS_SYSTEM=true
+    [ -f "$TMP_DIR/vendor.img" ] && HAS_VENDOR=true && PARTITION_COUNT=$((PARTITION_COUNT + 1))
+    [ -f "$TMP_DIR/product.img" ] && HAS_PRODUCT=true && PARTITION_COUNT=$((PARTITION_COUNT + 1))
+    [ -f "$TMP_DIR/system_ext.img" ] && HAS_SYSTEM_EXT=true && PARTITION_COUNT=$((PARTITION_COUNT + 1))
+    [ -f "$TMP_DIR/odm.img" ] && HAS_ODM=true && PARTITION_COUNT=$((PARTITION_COUNT + 1))
+    [ -f "$TMP_DIR/vendor_dlkm.img" ] && HAS_VENDOR_DLKM=true && PARTITION_COUNT=$((PARTITION_COUNT + 1))
+    [ -f "$TMP_DIR/odm_dlkm.img" ] && HAS_ODM_DLKM=true && PARTITION_COUNT=$((PARTITION_COUNT + 1))
+    [ -f "$TMP_DIR/system_dlkm.img" ] && HAS_SYSTEM_DLKM=true && PARTITION_COUNT=$((PARTITION_COUNT + 1))
+    [ -f "$TMP_DIR/prism.img" ] && HAS_PRISM=true
+    [ -f "$TMP_DIR/optics.img" ] && HAS_OPTICS=true
     [ -f "$SRC_DIR/target/$TARGET_CODENAME/postinstall.edify" ] && HAS_POST_INSTALL=true
 
     {
@@ -349,156 +348,114 @@ GENERATE_UPDATER_SCRIPT()
         fi
         echo    'show_progress(1, 200);'
         if $HAS_SYSTEM; then
-            echo -e "\n# Patch partition system\n"
-            echo    'ui_print("Patching system image unconditionally...");'
-            echo -n    'block_image_update('
+            echo -e "\n# Flash partition system\n"
+            echo    'ui_print("Flashing system...");'
+            echo -n    'package_extract_file("system.img", '
             if [ "$TARGET_SUPER_PARTITION_SIZE" -ne 0 ]; then
-                echo -n    'map_partition("system"), '
+                echo    'map_partition("system"));'
             else
                 echo -n    '"'
                 echo -n    "$TARGET_BOOT_DEVICE_PATH"
-                echo -n    '/system", '
+                echo    '/system");'
             fi
-            echo -n    'package_extract_file("system.transfer.list"), '
-            echo -n    "\"system.new.dat${BROTLI_EXTENSION}\""
-            echo       ', "system.patch.dat") ||'
-            echo    '  abort("E1001: Failed to update system image.");'
         fi
         if $HAS_VENDOR; then
-            echo -e "\n# Patch partition vendor\n"
-            echo    'ui_print("Patching vendor image unconditionally...");'
-            echo -n    'block_image_update('
+            echo -e "\n# Flash partition vendor\n"
+            echo    'ui_print("Flashing vendor...");'
+            echo -n    'package_extract_file("vendor.img", '
             if [ "$TARGET_SUPER_PARTITION_SIZE" -ne 0 ]; then
-                echo -n    'map_partition("vendor"), '
+                echo    'map_partition("vendor"));'
             else
                 echo -n    '"'
                 echo -n    "$TARGET_BOOT_DEVICE_PATH"
-                echo -n    '/vendor", '
+                echo    '/vendor");'
             fi
-            echo -n    'package_extract_file("vendor.transfer.list"), '
-            echo -n    "\"vendor.new.dat${BROTLI_EXTENSION}\""
-            echo       ', "vendor.patch.dat") ||'
-            echo    '  abort("E2001: Failed to update vendor image.");'
         fi
         if $HAS_PRODUCT; then
-            echo -e "\n# Patch partition product\n"
-            echo    'ui_print("Patching product image unconditionally...");'
-            echo -n    'block_image_update('
+            echo -e "\n# Flash partition product\n"
+            echo    'ui_print("Flashing product...");'
+            echo -n    'package_extract_file("product.img", '
             if [ "$TARGET_SUPER_PARTITION_SIZE" -ne 0 ]; then
-                echo -n    'map_partition("product"), '
+                echo    'map_partition("product"));'
             else
                 echo -n    '"'
                 echo -n    "$TARGET_BOOT_DEVICE_PATH"
-                echo -n    '/product", '
+                echo    '/product");'
             fi
-            echo -n    'package_extract_file("product.transfer.list"), '
-            echo -n    "\"product.new.dat${BROTLI_EXTENSION}\""
-            echo       ', "product.patch.dat") ||'
-            echo    '  abort("E2001: Failed to update product image.");'
         fi
         if $HAS_SYSTEM_EXT; then
-            echo -e "\n# Patch partition system_ext\n"
-            echo    'ui_print("Patching system_ext image unconditionally...");'
-            echo -n    'block_image_update('
+            echo -e "\n# Flash partition system_ext\n"
+            echo    'ui_print("Flashing system_ext...");'
+            echo -n    'package_extract_file("system_ext.img", '
             if [ "$TARGET_SUPER_PARTITION_SIZE" -ne 0 ]; then
-                echo -n    'map_partition("system_ext"), '
+                echo    'map_partition("system_ext"));'
             else
                 echo -n    '"'
                 echo -n    "$TARGET_BOOT_DEVICE_PATH"
-                echo -n    '/system_ext", '
+                echo    '/system_ext");'
             fi
-            echo -n    'package_extract_file("system_ext.transfer.list"), '
-            echo -n    "\"system_ext.new.dat${BROTLI_EXTENSION}\""
-            echo       ', "system_ext.patch.dat") ||'
-            echo    '  abort("E2001: Failed to update system_ext image.");'
         fi
         if $HAS_ODM; then
-            echo -e "\n# Patch partition odm\n"
-            echo    'ui_print("Patching odm image unconditionally...");'
-            echo -n    'block_image_update('
+            echo -e "\n# Flash partition odm\n"
+            echo    'ui_print("Flashing odm...");'
+            echo -n    'package_extract_file("odm.img", '
             if [ "$TARGET_SUPER_PARTITION_SIZE" -ne 0 ]; then
-                echo -n    'map_partition("odm"), '
+                echo    'map_partition("odm"));'
             else
                 echo -n    '"'
                 echo -n    "$TARGET_BOOT_DEVICE_PATH"
-                echo -n    '/odm", '
+                echo    '/odm");'
             fi
-            echo -n    'package_extract_file("odm.transfer.list"), '
-            echo -n    "\"odm.new.dat${BROTLI_EXTENSION}\""
-            echo       ', "odm.patch.dat") ||'
-            echo    '  abort("E2001: Failed to update odm image.");'
         fi
         if $HAS_VENDOR_DLKM; then
-            echo -e "\n# Patch partition vendor_dlkm\n"
-            echo    'ui_print("Patching vendor_dlkm image unconditionally...");'
-            echo -n    'block_image_update('
+            echo -e "\n# Flash partition vendor_dlkm\n"
+            echo    'ui_print("Flashing vendor_dlkm...");'
+            echo -n    'package_extract_file("vendor_dlkm.img", '
             if [ "$TARGET_SUPER_PARTITION_SIZE" -ne 0 ]; then
-                echo -n    'map_partition("vendor_dlkm"), '
+                echo    'map_partition("vendor_dlkm"));'
             else
                 echo -n    '"'
                 echo -n    "$TARGET_BOOT_DEVICE_PATH"
-                echo -n    '/vendor_dlkm", '
+                echo    '/vendor_dlkm");'
             fi
-            echo -n    'package_extract_file("vendor_dlkm.transfer.list"), '
-            echo -n    "\"vendor_dlkm.new.dat${BROTLI_EXTENSION}\""
-            echo       ', "vendor_dlkm.patch.dat") ||'
-            echo    '  abort("E2001: Failed to update vendor_dlkm image.");'
         fi
         if $HAS_ODM_DLKM; then
-            echo -e "\n# Patch partition odm_dlkm\n"
-            echo    'ui_print("Patching odm_dlkm image unconditionally...");'
-            echo -n    'block_image_update('
+            echo -e "\n# Flash partition odm_dlkm\n"
+            echo    'ui_print("Flashing odm_dlkm...");'
+            echo -n    'package_extract_file("odm_dlkm.img", '
             if [ "$TARGET_SUPER_PARTITION_SIZE" -ne 0 ]; then
-                echo -n    'map_partition("odm_dlkm"), '
+                echo    'map_partition("odm_dlkm"));'
             else
                 echo -n    '"'
                 echo -n    "$TARGET_BOOT_DEVICE_PATH"
-                echo -n    '/odm_dlkm", '
+                echo    '/odm_dlkm");'
             fi
-            echo -n    'package_extract_file("odm_dlkm.transfer.list"), '
-            echo -n    "\"odm_dlkm.new.dat${BROTLI_EXTENSION}\""
-            echo       ', "odm_dlkm.patch.dat") ||'
-            echo    '  abort("E2001: Failed to update odm_dlkm image.");'
         fi
         if $HAS_SYSTEM_DLKM; then
-            echo -e "\n# Patch partition system_dlkm\n"
-            echo    'ui_print("Patching system_dlkm image unconditionally...");'
-            echo -n    'block_image_update('
+            echo -e "\n# Flash partition system_dlkm\n"
+            echo    'ui_print("Flashing system_dlkm...");'
+            echo -n    'package_extract_file("system_dlkm.img", '
             if [ "$TARGET_SUPER_PARTITION_SIZE" -ne 0 ]; then
-                echo -n    'map_partition("system_dlkm"), '
+                echo    'map_partition("system_dlkm"));'
             else
                 echo -n    '"'
                 echo -n    "$TARGET_BOOT_DEVICE_PATH"
-                echo -n    '/system_dlkm", '
+                echo    '/system_dlkm");'
             fi
-            echo -n    'package_extract_file("system_dlkm.transfer.list"), '
-            echo -n    "\"system_dlkm.new.dat${BROTLI_EXTENSION}\""
-            echo       ', "system_dlkm.patch.dat") ||'
-            echo    '  abort("E2001: Failed to update system_dlkm image.");'
         fi
         if $HAS_PRISM; then
-            echo -e "\n# Patch partition prism\n"
-            echo    'ui_print("Patching prism image unconditionally...");'
-            echo -n    'block_image_update('
-            echo -n    '"'
+            echo -e "\n# Flash partition prism\n"
+            echo    'ui_print("Flashing prism...");'
+            echo -n    'package_extract_file("prism.img", "'
             echo -n    "$TARGET_BOOT_DEVICE_PATH"
-            echo -n    '/prism", '
-            echo -n    'package_extract_file("prism.transfer.list"), '
-            echo -n    "\"prism.new.dat${BROTLI_EXTENSION}\""
-            echo       ', "prism.patch.dat") ||'
-            echo    '  abort("E2001: Failed to update prism image.");'
+            echo    '/prism");'
         fi
         if $HAS_OPTICS; then
-            echo -e "\n# Patch partition optics\n"
-            echo    'ui_print("Patching optics image unconditionally...");'
-            echo -n    'block_image_update('
-            echo -n    '"'
+            echo -e "\n# Flash partition optics\n"
+            echo    'ui_print("Flashing optics...");'
+            echo -n    'package_extract_file("optics.img", "'
             echo -n    "$TARGET_BOOT_DEVICE_PATH"
-            echo -n    '/optics", '
-            echo -n    'package_extract_file("optics.transfer.list"), '
-            echo -n    "\"optics.new.dat${BROTLI_EXTENSION}\""
-            echo       ', "optics.patch.dat") ||'
-            echo    '  abort("E2001: Failed to update optics image.");'
+            echo    '/optics");'
         fi
         if [ "$TARGET_SUPER_PARTITION_SIZE" -ne 0 ]; then
             echo -e "\n# --- End patching dynamic partitions ---\n"
@@ -655,27 +612,8 @@ if [ "$TARGET_SUPER_PARTITION_SIZE" -ne 0 ]; then
     GENERATE_OP_LIST
 fi
 
-BROTLI_QUALITY=6
-$DEBUG && BROTLI_QUALITY=0
-
-while IFS= read -r f; do
-    PARTITION="$(basename "$f" | sed "s/.img//g")"
-    IS_VALID_PARTITION_NAME "$PARTITION" || continue
-
-    (
-        LOG "- Converting $PARTITION.img to $PARTITION.new.dat"
-        EVAL "img2sdat -o \"$TMP_DIR\" \"$f\"" || exit 1
-        rm -f "$f"
-
-        LOG "- Compressing $PARTITION.new.dat"
-        # https://android.googlesource.com/platform/build/+/refs/tags/android-15.0.0_r1/tools/releasetools/common.py#3585
-        EVAL "brotli --quality=\"$BROTLI_QUALITY\" --output=\"$TMP_DIR/$PARTITION.new.dat.br\" \"$TMP_DIR/$PARTITION.new.dat\"" || exit 1
-        rm -f "$TMP_DIR/$PARTITION.new.dat"
-    ) &
-done < <(find "$TMP_DIR" -maxdepth 1 -type f -name "*.img")
-
-# shellcheck disable=SC2046
-wait $(jobs -p) || exit 1
+# Partition images are packed raw (no sdat/brotli conversion) and flashed
+# directly via package_extract_file() in the updater-script.
 
 if [ -d "$WORK_DIR/kernel" ]; then
     while IFS= read -r f; do
@@ -703,11 +641,11 @@ LOG "- Creating zip"
 EVAL "rm -f \"$OUT_DIR/rom.zip\"" || exit 1
 pushd "$TMP_DIR" > /dev/null
 
-# 1. Compressed files (everything except zips, special dat files, META-INF)
-find . -type f ! -name "*.new.dat.br" ! -name "*.patch.dat" > compressed.txt
+# 1. Compressed files (everything except raw partition images and META-INF)
+find . -type f ! -name "*.img" ! -path "./META-INF/*" > compressed.txt
 
-# 2. Stored files (special dat files + META-INF folder)
-find . -type f \( -name "*.new.dat.br" -o -name "*.patch.dat" -o -name "META-INF" \) > stored.txt
+# 2. Stored files (raw partition images, already-compressed filesystem images)
+find . -type f -name "*.img" > stored.txt
 META_INF="./META-INF"
 
 # Add batches
