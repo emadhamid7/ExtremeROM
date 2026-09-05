@@ -31,7 +31,7 @@ etc/dpolicy
 # Samsung SIM Unlock
 SYSTEM_DEBLOAT+="
 system/bin/ssud
-system/etc/init/ssu_r12sxxx.rc
+system/etc/init/ssu_$(GET_PROP "system" "ro.product.system.name").rc
 system/etc/init/ssu.rc
 system/etc/permissions/privapp-permissions-com.samsung.ssu.xml
 system/etc/sysconfig/samsungsimunlock.xml
@@ -50,14 +50,17 @@ etc/init/vendor_flash_recovery.rc
 
 # Apps debloat
 PRODUCT_DEBLOAT+="
-app/Chrome64
-app/Duo
+app/AssistantShell
+app/BardShell
+app/Chrome
+app/DuoStub
 app/Gmail2
 app/Maps
 app/YouTube
 overlay/GmsConfigOverlaySearchSelector.apk
 priv-app/Messages
 priv-app/SearchSelector
+priv-app/Turbo
 "
 
 SYSTEM_DEBLOAT+="
@@ -67,10 +70,19 @@ system/app/ChromeCustomizations
 system/app/Fast
 system/app/FBAppManager_NS
 system/app/KidsHome_Installer
+system/app/LiveDrawing
+system/app/LiveTranscribe
 system/app/MAPSAgent
 system/app/MDMApp
+system/app/MinusOnePage
+system/app/Netflix_activationCommon
+system/app/Netflix_stub
+system/app/Notes40
+system/app/ParentalCare
 system/app/PlayAutoInstallConfig
 system/app/Rampart
+system/app/SafetyInformation
+system/app/SamsungCalendar
 system/app/SamsungPassAutofill_v1
 system/app/SamsungTTSVoice_ar_AE_m00
 system/app/SamsungTTSVoice_de_DE_f00
@@ -89,6 +101,7 @@ system/app/SamsungTTSVoice_th_TH_f00
 system/app/SamsungTTSVoice_vi_VN_f00
 system/app/SilentLog
 system/app/SimAppDialog
+system/app/SmartReminder
 system/app/Traceur
 system/app/UniversalMDMClient
 system/app/WifiGuider
@@ -132,28 +145,37 @@ system/priv-app/AppUpdateCenter
 system/priv-app/AREmoji
 system/priv-app/AREmojiEditor
 system/priv-app/AuthFramework
+system/priv-app/AvatarPicker
 system/priv-app/BCService
 system/priv-app/CpAgent
+system/priv-app/DevGPUDriver-EX2100
 system/priv-app/DiagMonAgent94
 system/priv-app/DigitalKey
+system/priv-app/DigitalWellbeing
 system/priv-app/EnhancedAttestationAgent
 system/priv-app/FBInstaller_NS
 system/priv-app/FBServices
 system/priv-app/FotaAgent
+system/priv-app/GameDriver-EX2100
+system/priv-app/GameHome
 system/priv-app/ImsLogger
 system/priv-app/IpsGeofence
+system/priv-app/LedBackCoverAppUnbound
 system/priv-app/OdaService
 system/priv-app/OMCAgent5
 system/priv-app/OneDrive_Samsung_v3
 system/priv-app/PaymentFramework
 system/priv-app/SamsungCarKeyFw
+system/priv-app/SamsungBilling
 system/priv-app/SamsungPass
 system/priv-app/SamsungPositioning
 system/priv-app/SKMSAgent
 system/priv-app/SOAgent75
 system/priv-app/SPPPushClient
 system/priv-app/StickerFaceARAvatar
+system/priv-app/Upday
 system/priv-app/YourPhone_P1_5
+system/preload/Tips
 "
 
 PRISM_DEBLOAT+="
@@ -168,13 +190,30 @@ sipdb
 OPTICS_DEBLOAT+="
 configs
 "
+# Bixby
+SYSTEM_DEBLOAT+="
+system/app/BixbyWakeup
+system/app/VisionIntelligence3.7
+system/priv-app/Bixby
+system/priv-app/BixbyInterpreter
+system/priv-app/BixbyVisionFramework3.5
+system/etc/sysconfig/bixbyagent.xml
+system/etc/permissions/privapp-permissions-com.samsung.android.bixby.agent.xml
+system/etc/permissions/privapp-permissions-com.samsung.android.bixby.wakeup.xml
+system/etc/permissions/signature-permissions-com.samsung.android.bixby.agent.xml
+system/etc/preferred-apps/com.samsung.android.bixby.agent.xml
+"
+# SVoiceIME
+SYSTEM_DEBLOAT+="
+system/priv-app/SVoiceIME
+"
 
 # eSIM
 if $SOURCE_IS_ESIM_SUPPORTED; then
     if ! $TARGET_IS_ESIM_SUPPORTED; then
         SYSTEM_DEBLOAT+="
         system/etc/permissions/privapp-permissions-com.samsung.android.app.esimkeystring.xml
-        system/etc/permissions/privapp-permissions-com.samsung.euicc.mep.xml
+        system/etc/permissions/privapp-permissions-com.samsung.euicc.xml
         system/etc/sysconfig/preinstalled-packages-com.samsung.android.app.esimkeystring.xml
         system/etc/sysconfig/preinstalled-packages-com.samsung.euicc.xml
         system/priv-app/EsimKeyString
