@@ -593,8 +593,16 @@ while IFS= read -r f; do
         else
             FILESYSTEM_TYPE="$TARGET_OS_FILE_SYSTEM"
         fi
+        # NOTE: intentionally NOT passing -S/--sparse here. Partition images
+        # are packed raw and flashed directly via package_extract_file() in
+        # the updater-script (see below), which writes bytes verbatim to the
+        # block device and does not understand the Android sparse format.
+        # Passing -S made build_fs_image.sh emit sparse images (ext4 via
+        # mkuserimg_mke2fs -s, f2fs via mkf2fsuserimg -S, erofs via a manual
+        # img2simg pass) that were never unsparsed before being flashed,
+        # corrupting the resulting partitions on-device.
         "$SRC_DIR/scripts/build_fs_image.sh" "$FILESYSTEM_TYPE" \
-            -o "$TMP_DIR/$PARTITION.img" -S \
+            -o "$TMP_DIR/$PARTITION.img" \
             "$WORK_DIR/$PARTITION" "$WORK_DIR/configs/file_context-$PARTITION" "$WORK_DIR/configs/fs_config-$PARTITION" || exit 1
         LOG_STEP_OUT
     ) &
