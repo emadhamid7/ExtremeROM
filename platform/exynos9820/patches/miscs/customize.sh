@@ -5,6 +5,11 @@ sed -i "${LINE}s/,fileencryption=ice//g" "$WORK_DIR/vendor/etc/fstab.exynos9820"
 # ODE
 sed -i -e "/ODE/d" -e "/keydata/d" -e "/keyrefuge/d" "$WORK_DIR/vendor/etc/fstab.exynos9820"
 
+# temporary hack until we deknox
+LOG_STEP_IN "- Enabling IncrementalFS"
+SET_PROP "vendor" "ro.product.first_api_level" "30"
+LOG_STEP_OUT
+
 LOG_STEP_IN "- Enabling updateable APEX images"
 SET_PROP "vendor" "ro.apex.updatable" "true"
 LOG_STEP_OUT
