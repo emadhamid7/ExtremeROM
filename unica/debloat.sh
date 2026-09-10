@@ -1,19 +1,5 @@
-#
-# Copyright (C) 2023 Salvo Giangreco
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
+# Copyright (c) 2025 Salvo Giangreco
+# SPDX-License-Identifier: GPL-3.0-or-later
 
 # UN1CA debloat list
 # - Add entries inside the specific partition containing that file (<PARTITION>_DEBLOAT+="")
@@ -27,11 +13,15 @@ dpolicy_system
 VENDOR_DEBLOAT+="
 etc/dpolicy
 "
+# Samsung PROCA certificate DB
+SYSTEM_DEBLOAT+="
+system/etc/proca.db
+"
 
 # Samsung SIM Unlock
 SYSTEM_DEBLOAT+="
 system/bin/ssud
-system/etc/init/ssu_r12sxxx.rc
+system/etc/init/ssu_$(GET_PROP "system" "ro.product.system.name").rc
 system/etc/init/ssu.rc
 system/etc/permissions/privapp-permissions-com.samsung.ssu.xml
 system/etc/sysconfig/samsungsimunlock.xml
@@ -48,50 +38,72 @@ bin/install-recovery.sh
 etc/init/vendor_flash_recovery.rc
 "
 
-# Apps debloat
+# Product bloat
 PRODUCT_DEBLOAT+="
-app/Chrome64
-app/Duo
+app/AssistantShell
+app/BardShell
+app/Chrome
+app/DuoStub
 app/Gmail2
 app/Maps
 app/YouTube
 overlay/GmsConfigOverlaySearchSelector.apk
+priv-app/GoogleOneTimeInitializer
+priv-app/GoogleRestore
+priv-app/HotwordEnrollmentOKGoogleEx3CORTEXM4
+priv-app/HotwordEnrollmentXGoogleEx3CORTEXM4
 priv-app/Messages
 priv-app/SearchSelector
+priv-app/Turbo
 "
 
 SYSTEM_DEBLOAT+="
+system/app/ARCore
 system/app/CarrierDefaultApp
 system/app/ccinfo
 system/app/ChromeCustomizations
 system/app/Fast
 system/app/FBAppManager_NS
+system/app/GearManagerStub
+system/app/GooglePrintRecommendationService
 system/app/KidsHome_Installer
+system/app/LiveTranscribe
 system/app/MAPSAgent
 system/app/MDMApp
+system/app/MinusOnePage
+system/app/Netflix_activationCommon
+system/app/Netflix_stub
+system/app/ParentalCare
+system/app/PhotoTable
 system/app/PlayAutoInstallConfig
+system/app/PrivateAccessTokens
 system/app/Rampart
+system/app/SafetyInformation
+system/app/SamsungCalendar
 system/app/SamsungPassAutofill_v1
-system/app/SamsungTTSVoice_ar_AE_m00
 system/app/SamsungTTSVoice_de_DE_f00
 system/app/SamsungTTSVoice_en_GB_f00
 system/app/SamsungTTSVoice_es_ES_f00
-system/app/SamsungTTSVoice_es_MX_f00
 system/app/SamsungTTSVoice_es_US_f00
 system/app/SamsungTTSVoice_fr_FR_f00
 system/app/SamsungTTSVoice_hi_IN_f00
-system/app/SamsungTTSVoice_id_ID_f00
 system/app/SamsungTTSVoice_it_IT_f00
 system/app/SamsungTTSVoice_pl_PL_f00
-system/app/SamsungTTSVoice_pt_BR_f00
 system/app/SamsungTTSVoice_ru_RU_f00
 system/app/SamsungTTSVoice_th_TH_f00
 system/app/SamsungTTSVoice_vi_VN_f00
 system/app/SilentLog
 system/app/SimAppDialog
+system/app/SmartReminder
+system/app/SmartSwitchAgent
+system/app/SmartSwitchStub
+system/app/SmartTethering
 system/app/Traceur
 system/app/UniversalMDMClient
+system/app/VisionIntelligence3.7
+system/app/WifiAiService
 system/app/WifiGuider
+system/hidden/SmartTutor
 system/etc/default-permissions/default-permissions-com.sec.spp.push.xml
 system/etc/init/digitalkey_init_ble_tss2.rc
 system/etc/init/samsung_pass_authenticator_service.rc
@@ -126,41 +138,52 @@ system/etc/sysconfig/preinstalled-packages-com.samsung.android.spayfw.xml
 system/etc/sysconfig/samsungauthframework.xml
 system/etc/sysconfig/samsungpassapp.xml
 system/etc/sysconfig/samsungpushservice.xml
-system/hidden/SmartTutor
 system/preload/Facebook_stub_preload
+system/preload/Tips
 system/priv-app/AppUpdateCenter
 system/priv-app/AREmoji
-system/priv-app/AREmojiEditor
 system/priv-app/AuthFramework
 system/priv-app/BCService
-system/priv-app/CpAgent
 system/priv-app/DiagMonAgent94
+system/priv-app/BixbyVisionFramework3.5
+system/priv-app/DevGPUDriver-EX2100
+system/priv-app/DeviceDiagnostics
+system/priv-app/DeviceQualityAgent35
 system/priv-app/DigitalKey
+system/priv-app/DigitalWellbeing
 system/priv-app/EnhancedAttestationAgent
+system/priv-app/EsimClient
+system/priv-app/EsimKeyString
 system/priv-app/FBInstaller_NS
 system/priv-app/FBServices
 system/priv-app/FotaAgent
+system/priv-app/GameDriver-EX2100
+system/priv-app/GameHome
 system/priv-app/ImsLogger
 system/priv-app/IpsGeofence
+system/priv-app/LedBackCoverAppUnbound
+system/priv-app/NetworkDiagnostic
 system/priv-app/OdaService
 system/priv-app/OMCAgent5
 system/priv-app/OneDrive_Samsung_v3
 system/priv-app/PaymentFramework
+system/priv-app/SamsungBilling
 system/priv-app/SamsungCarKeyFw
 system/priv-app/SamsungPass
 system/priv-app/SamsungPositioning
+system/priv-app/SecAppSeparation
 system/priv-app/SKMSAgent
+system/priv-app/SmartSwitchAssistant
 system/priv-app/SOAgent75
 system/priv-app/SPPPushClient
 system/priv-app/StickerFaceARAvatar
+system/priv-app/Upday
 system/priv-app/YourPhone_P1_5
 "
-
 PRISM_DEBLOAT+="
 app
 etc
 HWRDB
-preload
 priv-app
 sipdb
 "
@@ -168,13 +191,26 @@ sipdb
 OPTICS_DEBLOAT+="
 configs
 "
+# Bixby
+SYSTEM_DEBLOAT+="
+system/app/BixbyWakeup
+system/app/VisionIntelligence3.7
+system/priv-app/Bixby
+system/priv-app/BixbyInterpreter
+system/priv-app/BixbyVisionFramework3.5
+system/etc/sysconfig/bixbyagent.xml
+system/etc/permissions/privapp-permissions-com.samsung.android.bixby.agent.xml
+system/etc/permissions/privapp-permissions-com.samsung.android.bixby.wakeup.xml
+system/etc/permissions/signature-permissions-com.samsung.android.bixby.agent.xml
+system/etc/preferred-apps/com.samsung.android.bixby.agent.xml
+"
 
 # eSIM
 if $SOURCE_IS_ESIM_SUPPORTED; then
     if ! $TARGET_IS_ESIM_SUPPORTED; then
         SYSTEM_DEBLOAT+="
         system/etc/permissions/privapp-permissions-com.samsung.android.app.esimkeystring.xml
-        system/etc/permissions/privapp-permissions-com.samsung.euicc.mep.xml
+        system/etc/permissions/privapp-permissions-com.samsung.euicc.xml
         system/etc/sysconfig/preinstalled-packages-com.samsung.android.app.esimkeystring.xml
         system/etc/sysconfig/preinstalled-packages-com.samsung.euicc.xml
         system/priv-app/EsimKeyString
