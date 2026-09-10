@@ -12,8 +12,6 @@ ADD_TO_WORK_DIR "$TARGET_FIRMWARE" "system" "system/priv-app/DevGPUDriver-EX9820
 LOG_STEP_OUT
 
 LOG_STEP_IN "- Replacing Hotword"
-DELETE_FROM_WORK_DIR "product" "priv-app/HotwordEnrollmentOKGoogleEx3CORTEXM4"
-DELETE_FROM_WORK_DIR "product" "priv-app/HotwordEnrollmentXGoogleEx3CORTEXM4"
 mkdir -p "$WORK_DIR/product/priv-app/HotwordEnrollmentOKGoogleExCORTEXM4"
 mkdir -p "$WORK_DIR/product/priv-app/HotwordEnrollmentXGoogleExCORTEXM4"
 cp -a --preserve=all "$FW_DIR/${MODEL}_${REGION}/system/system/priv-app/HotwordEnrollmentOKGoogleExCORTEXM4/HotwordEnrollmentOKGoogleExCORTEXM4.apk" "$WORK_DIR/product/priv-app/HotwordEnrollmentOKGoogleExCORTEXM4/HotwordEnrollmentOKGoogleExCORTEXM4.apk"
