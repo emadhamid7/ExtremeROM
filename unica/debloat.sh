@@ -18,19 +18,6 @@ SYSTEM_DEBLOAT+="
 system/etc/proca.db
 "
 
-# Samsung SIM Unlock
-SYSTEM_DEBLOAT+="
-system/bin/ssud
-system/etc/init/ssu_$(GET_PROP "system" "ro.product.system.name").rc
-system/etc/init/ssu.rc
-system/etc/permissions/privapp-permissions-com.samsung.ssu.xml
-system/etc/sysconfig/samsungsimunlock.xml
-system/lib64/android.security.securekeygeneration-ndk.so
-system/lib64/vendor.samsung.hardware.security.ssu-V1-ndk.so
-system/lib64/libssu_keystore2.so
-system/priv-app/SsuService
-"
-
 # Recovery restoration script
 VENDOR_DEBLOAT+="
 recovery-from-boot.p
@@ -145,15 +132,12 @@ system/priv-app/AREmoji
 system/priv-app/AuthFramework
 system/priv-app/BCService
 system/priv-app/DiagMonAgent94
-system/priv-app/BixbyVisionFramework3.5
 system/priv-app/DevGPUDriver-EX2100
 system/priv-app/DeviceDiagnostics
 system/priv-app/DeviceQualityAgent35
 system/priv-app/DigitalKey
 system/priv-app/DigitalWellbeing
 system/priv-app/EnhancedAttestationAgent
-system/priv-app/EsimClient
-system/priv-app/EsimKeyString
 system/priv-app/FBInstaller_NS
 system/priv-app/FBServices
 system/priv-app/FotaAgent
@@ -196,7 +180,6 @@ SYSTEM_DEBLOAT+="
 system/app/BixbyWakeup
 system/app/VisionIntelligence3.7
 system/priv-app/Bixby
-system/priv-app/BixbyInterpreter
 system/priv-app/BixbyVisionFramework3.5
 system/etc/sysconfig/bixbyagent.xml
 system/etc/permissions/privapp-permissions-com.samsung.android.bixby.agent.xml
