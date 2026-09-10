@@ -10,7 +10,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        target: [beyond0lte, beyond1lte, beyond2lte, beyondx]
+        target: [beyond0lte]
 
     steps:
       - name: Checkout repo
