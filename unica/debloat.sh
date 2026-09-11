@@ -87,7 +87,6 @@ system/app/SmartSwitchStub
 system/app/SmartTethering
 system/app/Traceur
 system/app/UniversalMDMClient
-system/app/VisionIntelligence3.7
 system/app/WifiAiService
 system/app/WifiGuider
 system/hidden/SmartTutor
@@ -170,6 +169,7 @@ system/priv-app/YourPhone_P1_5
 PRISM_DEBLOAT+="
 app
 HWRDB
+media
 priv-app
 sipdb
 "
