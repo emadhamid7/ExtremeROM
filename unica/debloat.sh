@@ -173,6 +173,10 @@ HWRDB
 priv-app
 sipdb
 "
+# dummy
+OPTICS_DEBLOAT+="
+emad
+"
 
 # Bixby
 SYSTEM_DEBLOAT+="
