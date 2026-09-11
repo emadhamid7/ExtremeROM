@@ -130,6 +130,7 @@ system/preload/Tips
 system/priv-app/AppUpdateCenter
 system/priv-app/AREmoji
 system/priv-app/AuthFramework
+system/priv-app/AvatarPicker
 system/priv-app/BCService
 system/priv-app/DiagMonAgent94
 system/priv-app/DevGPUDriver-EX2100
@@ -158,23 +159,21 @@ system/priv-app/SamsungPositioning
 system/priv-app/SecAppSeparation
 system/priv-app/SKMSAgent
 system/priv-app/SmartSwitchAssistant
+system/priv-app/SmartTouchCall
 system/priv-app/SOAgent75
 system/priv-app/SPPPushClient
 system/priv-app/StickerFaceARAvatar
+system/priv-app/SVoiceIME
 system/priv-app/Upday
 system/priv-app/YourPhone_P1_5
 "
 PRISM_DEBLOAT+="
 app
-etc
 HWRDB
 priv-app
 sipdb
 "
 
-OPTICS_DEBLOAT+="
-configs
-"
 # Bixby
 SYSTEM_DEBLOAT+="
 system/app/BixbyWakeup
@@ -186,6 +185,15 @@ system/etc/permissions/privapp-permissions-com.samsung.android.bixby.agent.xml
 system/etc/permissions/privapp-permissions-com.samsung.android.bixby.wakeup.xml
 system/etc/permissions/signature-permissions-com.samsung.android.bixby.agent.xml
 system/etc/preferred-apps/com.samsung.android.bixby.agent.xml
+"
+# fabriccrypto bullshit
+SYSTEM_DEBLOAT+="
+system/bin/fabric_crypto
+system/framework/FabricCryptoLib.jar
+system/lib64/com.samsung.security.fabric.cryptod-V1-cpp.so
+system/etc/init/fabric_crypto.rc
+system/etc/permissions/FabricCryptoLib.xml
+system/etc/vintf/manifest/fabric_crypto_manifest.xml
 "
 
 # eSIM
