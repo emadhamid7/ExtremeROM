@@ -3,29 +3,10 @@ TARGET_FIRMWARE_PATH="$FW_DIR/$(echo -n "$TARGET_FIRMWARE" | sed 's./._.g' | rev
 
 LOG_STEP_IN "- Replacing boot animation blobs with stock"
 BLOBS_LIST="
-system/media/battery_error.spi
-system/media/battery_lightning_fast.spi
-system/media/battery_lightning.spi
-system/media/battery_low.spi
-system/media/battery_temperature_error.spi
-system/media/battery_temperature_limit.spi
-system/media/battery_water_usb.spi
 system/media/bootsamsungloop.qmg
 system/media/bootsamsung.qmg
-system/media/charging_vi_100.spi
-system/media/charging_vi_level1.spi
-system/media/charging_vi_level2.spi
-system/media/charging_vi_level3.spi
-system/media/charging_vi_level4.spi
-system/media/dock_error_usb.spi
-system/media/incomplete_connect.spi
 system/media/lcd_density.txt
-system/media/percentage.spi
-system/media/safety_timer_usb.spi
 system/media/shutdown.qmg
-system/media/slow_charging_usb.spi
-system/media/temperature_limit_usb.spi
-system/media/water_protection_usb.spi
 "
 for blob in $BLOBS_LIST
 do
