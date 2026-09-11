@@ -1,4 +1,3 @@
-# SET_CSC_FEATURE_CONFIG "<config>" "<value>"
 # Sets the supplied config to the desidered value.
 # "-d" or "--delete" can be passed as value to delete the config.
 SET_CSC_FEATURE_CONFIG()
@@ -22,11 +21,6 @@ SET_CSC_FEATURE_CONFIG()
     return 0
 }
 
-LOG "- Patching CSC model"
-SOURCE_MODEL=$(echo -n "$SOURCE_FIRMWARE" | cut -d "/" -f 1)
-TARGET_MODEL=$(echo -n "$TARGET_FIRMWARE" | cut -d "/" -f 1)
-find "$WORK_DIR/optics" -type f -exec sed -i "s/SAOMC_${SOURCE_MODEL}/SAOMC_${TARGET_MODEL}/g" {} +
-
 LOG_STEP_IN "- Patching CSC Features"
 while read -r FILE; do
     (
@@ -44,7 +38,6 @@ while read -r FILE; do
         SET_CSC_FEATURE_CONFIG "CscFeature_Setting_EnableHwVersionDisplay" "TRUE"
         SET_CSC_FEATURE_CONFIG "CscFeature_Setting_SupportMenuSmartTutor" "FALSE"
         SET_CSC_FEATURE_CONFIG "CscFeature_Setting_ConfigLongPressType" 1
-        SET_CSC_FEATURE_CONFIG "CscFeature_Common_DisableBixby" --delete
         LOG_STEP_OUT
 
         LOG "- Encoding $FILE"
