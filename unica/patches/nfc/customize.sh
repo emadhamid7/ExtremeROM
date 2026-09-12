@@ -5,7 +5,6 @@ elif [[ "$TARGET_NFC_CHIP_VENDOR" == "SLSI" && "$SOURCE_NFC_CHIP_VENDOR" == "NXP
     LOG "- Target NFC is SLSI, source is NXP. Swapping to SLSI blobs from r11sxxx."
 
     BLOBS_LIST="
-    system/etc/libnfc-nci.conf
     system/lib64/libnfc_nxpsn_jni.so
     system/lib64/vendor.samsung.hardware.nfc_aidl-V1-ndk.so
     system/lib64/vendor.samsung.hardware.nfc@2.0.so
@@ -17,6 +16,7 @@ elif [[ "$TARGET_NFC_CHIP_VENDOR" == "SLSI" && "$SOURCE_NFC_CHIP_VENDOR" == "NXP
     done
 
     BLOBS_LIST="
+    system/etc/libnfc-nci.conf
     system/lib64/libnfc_sec_jni.so
     system/lib64/libnfc-nci_flags.so
     system/lib64/libnfc-sec.so
