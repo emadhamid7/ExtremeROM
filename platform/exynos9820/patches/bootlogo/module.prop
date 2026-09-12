@@ -1,0 +1,4 @@
+id=bootlogo
+name=BootLogo patch
+author=Emad
+description=Replaces the Exynos9820 boot logo binary with a modified one.
