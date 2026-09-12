@@ -250,4 +250,3 @@
 /system/lib64/libnfc-nci_flags\.so u:object_r:system_lib_file:s0
 /system/lib64/libnfc-sec\.so u:object_r:system_lib_file:s0
 /system/lib64/libstatslog_nfc\.so u:object_r:system_lib_file:s0
-/system/priv-app/NfcNci/lib/arm64/libnfc_sec_jni\.so u:object_r:system_file:s0
