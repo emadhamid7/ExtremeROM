@@ -245,3 +245,8 @@ system/lib64/vendor.samsung.hardware.security.vaultkeeper@2.0.so 0 0 644 capabil
 system/system_ext 0 0 755 capabilities=0x0
 system/system_ext/apex 0 0 755 capabilities=0x0
 system/system_ext/apex/com.android.vndk.v31.apex 0 0 644 capabilities=0x0
+/system/etc/libnfc-nci\.conf u:object_r:system_lib_file:s0
+/system/lib64/libnfc_sec_jni\.so u:object_r:system_lib_file:s0
+/system/lib64/libnfc-nci_flags\.so u:object_r:system_lib_file:s0
+/system/lib64/libnfc-sec\.so u:object_r:system_lib_file:s0
+/system/lib64/libstatslog_nfc\.so u:object_r:system_lib_file:s0
