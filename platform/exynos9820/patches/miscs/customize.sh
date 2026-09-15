@@ -6,8 +6,14 @@ sed -i "${LINE}s/,fileencryption=ice//g" "$WORK_DIR/vendor/etc/fstab.exynos9820"
 sed -i -e "/ODE/d" -e "/keydata/d" -e "/keyrefuge/d" "$WORK_DIR/vendor/etc/fstab.exynos9820"
 
 # temporary hack until we deknox
-LOG_STEP_IN "- Enabling IncrementalFS"
+LOG_STEP_IN "- Temporary hack"
 SET_PROP "vendor" "ro.product.first_api_level" "30"
+LOG_STEP_OUT
+
+# temporary hack until we deknox
+# Disable HDCP in WFD
+LOG_STEP_IN "- Temporary hack"
+SET_PROP "system" "wlan.wfd.hdcp" "disable"
 LOG_STEP_OUT
 
 LOG_STEP_IN "- Enabling updateable APEX images"
