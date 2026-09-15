@@ -47,8 +47,11 @@ priv-app/Turbo
 SYSTEM_DEBLOAT+="
 system/app/ARCore
 system/app/CarrierDefaultApp
+system/app/Cameralyzer
 system/app/ccinfo
 system/app/ChromeCustomizations
+system/app/EasterEgg
+system/app/FactoryCameraFB
 system/app/Fast
 system/app/FBAppManager_NS
 system/app/GearManagerStub
@@ -58,9 +61,11 @@ system/app/LiveTranscribe
 system/app/MAPSAgent
 system/app/MDMApp
 system/app/MinusOnePage
+system/app/MoccaMobile
 system/app/Netflix_activationCommon
 system/app/Netflix_stub
 system/app/ParentalCare
+system/app/PartnerBookmarksProvider
 system/app/PhotoTable
 system/app/PlayAutoInstallConfig
 system/app/PrivateAccessTokens
@@ -116,7 +121,6 @@ system/etc/permissions/privapp-permissions-com.sec.spp.push.xml
 system/etc/permissions/privapp-permissions-com.skms.android.agent.xml
 system/etc/permissions/privapp-permissions-com.wssyncmldm.xml
 system/etc/permissions/privapp-permissions-meta.xml
-system/etc/PF_TA
 system/etc/sysconfig/digitalkey.xml
 system/etc/sysconfig/meta-hiddenapi-package-allowlist.xml
 system/etc/sysconfig/preinstalled-packages-com.samsung.android.dkey.xml
@@ -175,7 +179,7 @@ sipdb
 "
 # dummy
 OPTICS_DEBLOAT+="
-emad
+dummy
 "
 
 # Bixby
@@ -198,6 +202,18 @@ system/lib64/com.samsung.security.fabric.cryptod-V1-cpp.so
 system/etc/init/fabric_crypto.rc
 system/etc/permissions/FabricCryptoLib.xml
 system/etc/vintf/manifest/fabric_crypto_manifest.xml
+"
+
+# Experimental nukes
+SYSTEM_DEBLOAT+="
+system/priv-app/DeviceKeystring
+system/priv-app/HashTagService
+system/app/AllShareAware
+system/app/MdxKitService
+system/priv-app/BeaconManager
+system/priv-app/EasySetup
+system/priv-app/SamsungExperienceService
+system/priv-app/ShareLive
 "
 
 # eSIM
