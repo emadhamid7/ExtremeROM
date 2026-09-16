@@ -1,72 +1,66 @@
-From: Emad <emadhamid7@users.noreply.github.com>
-Date: Wed, 16 Sep 2026 00:00:00 +0000
-Subject: [PATCH] Remove software update, user manual, tips, remote support
- entries
-
-Removes four HomepagePreference entries from the top-level settings
-screen:
- - top_level_software_update
- - top_level_user_manual
- - top_level_tips
- - top_level_remote_support
+From aefc80b0936b3af06c6fadf456466284d90c5597 Mon Sep 17 00:00:00 2001
+From: emadhamid7 <75576145+emadhamid7@users.noreply.github.com>
+Date: Wed, 16 Sep 2026 21:04:30 +0530
+Subject: [PATCH] Remove unnecessary top-level Settings items
 
 ---
- res/xml/sec_top_level_settings.xml | 43 -----------------------------------
+ res/xml/sec_top_level_settings.xml | 43 ------------------------------
  1 file changed, 43 deletions(-)
 
 diff --git a/res/xml/sec_top_level_settings.xml b/res/xml/sec_top_level_settings.xml
-index b85d60ec..1e02bc03 100644
+index 41bc56a..66dc071 100644
 --- a/res/xml/sec_top_level_settings.xml
 +++ b/res/xml/sec_top_level_settings.xml
 @@ -369,49 +369,6 @@
+         settings:keywords="@string/keywords_accessibility_main" />
      <com.samsung.android.settings.widget.SecInsetCategoryPreference
-         android:order="300000"/>
-     <com.android.settings.widget.HomepagePreference
--        android:icon="@7F080954"
--        android:layout="@7F0D08CB"
--        android:title="@7F14278E"
+         android:order="300000" />
+-    <com.android.settings.widget.HomepagePreference
+-        android:icon="@drawable/sec_ic_settings_software_update"
+-        android:layout="@layout/sec_homepage_software_update_preference"
+-        android:title="@string/sec_software_update_title"
 -        android:key="top_level_software_update"
--        android:summary="@7F142E07"
+-        android:summary="@string/summary_placeholder"
 -        android:order="320000"
 -        android:fragment="com.samsung.android.settings.softwareupdate.SoftwareUpdateSettings"
 -        settings:controller="com.samsung.android.settings.homepage.TopLevelSoftwareUpdatePreferenceController"
--        settings:highlightableMenuKey="@7F1417D1"
--        settings:keywords="@7F1413F6"/>
+-        settings:highlightableMenuKey="@string/menu_key_software_update"
+-        settings:keywords="@string/keywords_software_update_settings" />
 -    <com.android.settings.widget.HomepagePreference
--        android:icon="@7F08095A"
--        android:title="@7F14311A"
+-        android:icon="@drawable/sec_ic_settings_user_manual"
+-        android:title="@string/user_manual"
 -        android:key="top_level_user_manual"
--        android:summary="@7F142E07"
+-        android:summary="@string/summary_placeholder"
 -        android:order="340000"
 -        settings:controller="com.samsung.android.settings.homepage.TopLevelUserManualPreferenceController"
--        settings:highlightableMenuKey="@7F1417D8"/>
+-        settings:highlightableMenuKey="@string/menu_key_user_manual" />
 -    <com.android.settings.widget.HomepagePreference
--        android:icon="@7F080959"
--        android:title="@7F14280A"
+-        android:icon="@drawable/sec_ic_settings_tips"
+-        android:title="@string/sec_tips_title"
 -        android:key="top_level_tips"
--        android:summary="@7F142E07"
+-        android:summary="@string/summary_placeholder"
 -        android:order="340000"
 -        settings:controller="com.samsung.android.settings.homepage.TopLevelTipsPreferenceController"
--        settings:highlightableMenuKey="@7F1417D7">
+-        settings:highlightableMenuKey="@string/menu_key_tips">
 -        <intent
--            android:targetPackage="@7F140A26"
--            android:targetClass="@7F140A25">
+-            android:targetPackage="@string/config_sec_toplevel_tips_package"
+-            android:targetClass="@string/config_sec_toplevel_tips_class">
 -            <extra
 -                android:name="from_settings"
--                android:value="true"/>
+-                android:value="true" />
 -        </intent>
 -    </com.android.settings.widget.HomepagePreference>
 -    <com.android.settings.widget.HomepagePreference
--        android:icon="@7F080951"
--        android:title="@7F142671"
+-        android:icon="@drawable/sec_ic_settings_remotesupport"
+-        android:title="@string/sec_remote_support"
 -        android:key="top_level_remote_support"
--        android:summary="@7F142671"
+-        android:summary="@string/sec_remote_support"
 -        android:order="360000"
 -        settings:controller="com.samsung.android.settings.homepage.TopLevelRemoteSupportPreferenceController"
--        settings:highlightableMenuKey="@7F1417CB"/>
--    <com.android.settings.widget.HomepagePreference
-         android:icon="@7F080933"
-         android:title="@7F142088"
-         android:key="top_level_about_phone"
+-        settings:highlightableMenuKey="@string/menu_key_remote_support" />
+     <com.android.settings.widget.HomepagePreference
+         android:icon="@drawable/sec_ic_settings_about"
+         android:title="@string/sec_about_settings"
 -- 
-2.50.1
+2.54.0
+
