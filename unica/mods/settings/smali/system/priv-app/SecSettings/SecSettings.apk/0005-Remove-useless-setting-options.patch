@@ -1,0 +1,72 @@
+From: Emad <emadhamid7@users.noreply.github.com>
+Date: Wed, 16 Sep 2026 00:00:00 +0000
+Subject: [PATCH] Remove software update, user manual, tips, remote support
+ entries
+
+Removes four HomepagePreference entries from the top-level settings
+screen:
+ - top_level_software_update
+ - top_level_user_manual
+ - top_level_tips
+ - top_level_remote_support
+
+---
+ res/xml/sec_top_level_settings.xml | 43 -----------------------------------
+ 1 file changed, 43 deletions(-)
+
+diff --git a/res/xml/sec_top_level_settings.xml b/res/xml/sec_top_level_settings.xml
+index b85d60ec..1e02bc03 100644
+--- a/res/xml/sec_top_level_settings.xml
++++ b/res/xml/sec_top_level_settings.xml
+@@ -369,49 +369,6 @@
+     <com.samsung.android.settings.widget.SecInsetCategoryPreference
+         android:order="300000"/>
+     <com.android.settings.widget.HomepagePreference
+-        android:icon="@7F080954"
+-        android:layout="@7F0D08CB"
+-        android:title="@7F14278E"
+-        android:key="top_level_software_update"
+-        android:summary="@7F142E07"
+-        android:order="320000"
+-        android:fragment="com.samsung.android.settings.softwareupdate.SoftwareUpdateSettings"
+-        settings:controller="com.samsung.android.settings.homepage.TopLevelSoftwareUpdatePreferenceController"
+-        settings:highlightableMenuKey="@7F1417D1"
+-        settings:keywords="@7F1413F6"/>
+-    <com.android.settings.widget.HomepagePreference
+-        android:icon="@7F08095A"
+-        android:title="@7F14311A"
+-        android:key="top_level_user_manual"
+-        android:summary="@7F142E07"
+-        android:order="340000"
+-        settings:controller="com.samsung.android.settings.homepage.TopLevelUserManualPreferenceController"
+-        settings:highlightableMenuKey="@7F1417D8"/>
+-    <com.android.settings.widget.HomepagePreference
+-        android:icon="@7F080959"
+-        android:title="@7F14280A"
+-        android:key="top_level_tips"
+-        android:summary="@7F142E07"
+-        android:order="340000"
+-        settings:controller="com.samsung.android.settings.homepage.TopLevelTipsPreferenceController"
+-        settings:highlightableMenuKey="@7F1417D7">
+-        <intent
+-            android:targetPackage="@7F140A26"
+-            android:targetClass="@7F140A25">
+-            <extra
+-                android:name="from_settings"
+-                android:value="true"/>
+-        </intent>
+-    </com.android.settings.widget.HomepagePreference>
+-    <com.android.settings.widget.HomepagePreference
+-        android:icon="@7F080951"
+-        android:title="@7F142671"
+-        android:key="top_level_remote_support"
+-        android:summary="@7F142671"
+-        android:order="360000"
+-        settings:controller="com.samsung.android.settings.homepage.TopLevelRemoteSupportPreferenceController"
+-        settings:highlightableMenuKey="@7F1417CB"/>
+-    <com.android.settings.widget.HomepagePreference
+         android:icon="@7F080933"
+         android:title="@7F142088"
+         android:key="top_level_about_phone"
+-- 
+2.50.1
