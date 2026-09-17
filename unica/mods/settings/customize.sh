@@ -7,9 +7,13 @@ system/priv-app/SecSettings/SecSettings.apk/smali_classes4/com/samsung/android/s
 system/priv-app/SecSettings/SecSettings.apk/smali_classes4/com/samsung/android/settings/deviceinfo/batteryinfo/SecBatteryFirstUseDatePreferenceController.smali
 system/priv-app/SecSettings/SecSettings.apk/smali_classes4/com/samsung/android/settings/deviceinfo/batteryinfo/SecBatteryInfoFragment.smali
 "
+
+MODEL=$(echo "$SOURCE_FIRMWARE" | sed -E 's/^([^/]+)\/.*/\1/')
+
 for f in $FTP; do
-    sed -i "s/SM-A236B/SM-S721B/g" "$APKTOOL_DIR/$f"
+    sed -i "s/SM-A236B/$MODEL/g" "$APKTOOL_DIR/$f"
 done
+
 LOG_STEP_OUT
 
 LOG_STEP_IN "- Adding Multi-User Support"
