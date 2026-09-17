@@ -1,13 +1,13 @@
-From 1cd42e2c665de2b6ff2b80acb79a712bcd53e2fa Mon Sep 17 00:00:00 2001
+From 6e383199865d50655524ecba41672b73d6e2021e Mon Sep 17 00:00:00 2001
 From: emadhamid7 <emadhamid7@users.noreply.github.com>
-Date: Thu, 17 Sep 2026 15:30:49 +0530
+Date: Thu, 17 Sep 2026 23:47:13 +0530
 Subject: [PATCH] Enable dynamic resolution control
 
 ---
  .../android/settings/DisplaySettings$3.smali  |   24 +
  .../android/settings/DisplaySettings$4.smali  |  411 +-
  .../Utils$$ExternalSyntheticOutline0.smali    |   40 +
- .../com/android/settings/Utils.smali          |   92 +-
+ .../com/android/settings/Utils.smali          |   88 +-
  .../display/ScreenResolutionFragment.smali    |   77 +-
  .../display/ScreenZoomSettingsReceiver.smali  |   67 +-
  .../settings/display/SecDisplayUtils.smali    |  442 +-
@@ -16,7 +16,7 @@ Subject: [PATCH] Enable dynamic resolution control
  ...ScreenResolutionPreferenceController.smali |   31 +-
  ...reenResolutionSingleChoiceController.smali |   43 +-
  .../eternal/provider/items/DisplayItem.smali  | 4102 +++++++++--------
- 12 files changed, 3507 insertions(+), 2730 deletions(-)
+ 12 files changed, 3505 insertions(+), 2728 deletions(-)
 
 diff --git a/smali_classes2/com/android/settings/DisplaySettings$3.smali b/smali_classes2/com/android/settings/DisplaySettings$3.smali
 index dc57a4b..ac07ef1 100644
@@ -1104,21 +1104,9 @@ index c752bb4..8469377 100644
      .locals 0
  
 diff --git a/smali_classes2/com/android/settings/Utils.smali b/smali_classes2/com/android/settings/Utils.smali
-index 2e430dd..5750233 100644
+index 2e430dd..09f23e0 100644
 --- a/smali_classes2/com/android/settings/Utils.smali
 +++ b/smali_classes2/com/android/settings/Utils.smali
-@@ -3688,9 +3688,9 @@
- 
-     invoke-static {v1}, Ljava/util/Objects;->requireNonNull(Ljava/lang/Object;)Ljava/lang/Object;
- 
--    new-instance v2, Lcom/android/settings/Utils$$ExternalSyntheticLambda2;
-+    new-instance v2, Lcom/android/settings/Utils$$ExternalSyntheticLambda4;
- 
--    invoke-direct {v2, v1}, Lcom/android/settings/Utils$$ExternalSyntheticLambda2;-><init>(Ljava/lang/String;)V
-+    invoke-direct {v2, v1}, Lcom/android/settings/Utils$$ExternalSyntheticLambda4;-><init>(Ljava/lang/String;)V
- 
-     invoke-interface {v0, v2}, Ljava/util/stream/Stream;->anyMatch(Ljava/util/function/Predicate;)Z
- 
 @@ -4908,7 +4908,11 @@
  
      if-nez v0, :cond_2
