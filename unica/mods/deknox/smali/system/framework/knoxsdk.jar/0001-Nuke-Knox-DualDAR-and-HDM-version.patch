@@ -14,7 +14,7 @@ index 059731524c..e014bafb38 100644
 --- a/smali/com/samsung/android/knox/ddar/DualDARPolicy.smali
 +++ b/smali/com/samsung/android/knox/ddar/DualDARPolicy.smali
 @@ -96,7 +96,7 @@
- .method public static greylist getDualDARVersion()Ljava/lang/String;
+ .method public static getDualDARVersion()Ljava/lang/String;
      .locals 1
  
 -    const-string v0, "1.7.0"
@@ -29,7 +29,7 @@ index 11647d170d..ab5fdf0835 100644
 @@ -35,7 +35,7 @@
  .end method
  
- .method public static greylist getHdmVersion()Ljava/lang/String;
+ .method public static getHdmVersion()Ljava/lang/String;
 -    .locals 4
 +    .locals 2
  
