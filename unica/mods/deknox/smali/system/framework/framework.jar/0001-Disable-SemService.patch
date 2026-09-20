@@ -14,12 +14,12 @@ index 8a17b7c23a..51e27f275f 100644
 +++ b/smali_classes6/com/samsung/android/service/SemService/SemServiceManager.smali
 @@ -66,7 +66,7 @@
  
- .field private static blacklist cosName:Ljava/lang/String; = null
+ .field private static cosName:Ljava/lang/String; = null
  
--.field public static final blacklist isSupportSemService:Z = true
-+.field public static final blacklist isSupportSemService:Z = false
+-.field public static final isSupportSemService:Z = true
++.field public static final isSupportSemService:Z = false
  
- .field private static final blacklist normalSpi_Flag:I = 0x0
+ .field private static final normalSpi_Flag:I = 0x0
  
 @@ -159,7 +159,7 @@
  
