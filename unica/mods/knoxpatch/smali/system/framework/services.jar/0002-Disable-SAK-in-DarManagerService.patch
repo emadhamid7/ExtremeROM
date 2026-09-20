@@ -12,7 +12,7 @@ diff --git a/smali/com/android/server/knox/dar/DarManagerService.smali b/smali/c
 index aa017cb919..f89bd80cb7 100644
 --- a/smali/com/android/server/knox/dar/DarManagerService.smali
 +++ b/smali/com/android/server/knox/dar/DarManagerService.smali
-@@ -456,59 +456,11 @@
+@@ -1413,59 +1413,11 @@
  .end method
  
  .method public final checkDeviceIntegrity([Ljava/security/cert/Certificate;)Z
@@ -77,7 +77,7 @@ index aa017cb919..f89bd80cb7 100644
  .end method
  
  .method public final checkSystemPermission()V
-@@ -1834,259 +1786,11 @@
+@@ -3538,259 +3490,11 @@
  .end method
  
  .method public final isDeviceRootKeyInstalled()Z
@@ -342,7 +342,7 @@ index aa017cb919..f89bd80cb7 100644
  .end method
  
  .method public final isDualDarDoSupported()Z
-@@ -2231,180 +1935,11 @@
+@@ -3935,180 +3639,11 @@
  .end method
  
  .method public final isKnoxKeyInstallable()Z
