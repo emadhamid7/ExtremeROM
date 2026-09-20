@@ -12,7 +12,7 @@ diff --git a/smali/com/samsung/android/security/keystore/AttestParameterSpec.sma
 index 061edbb4d0..f9867c4291 100644
 --- a/smali/com/samsung/android/security/keystore/AttestParameterSpec.smali
 +++ b/smali/com/samsung/android/security/keystore/AttestParameterSpec.smali
-@@ -211,7 +211,7 @@
+@@ -229,7 +229,7 @@
  .method public isVerifiableIntegrity()Z
      .locals 1
  
