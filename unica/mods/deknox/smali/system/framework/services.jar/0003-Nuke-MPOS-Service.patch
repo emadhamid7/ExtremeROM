@@ -12,7 +12,7 @@ diff --git a/smali/com/android/server/SystemServer$$ExternalSyntheticLambda10.sm
 index 8c7a2c6c7f..cf1145e5df 100644
 --- a/smali/com/android/server/SystemServer$$ExternalSyntheticLambda10.smali
 +++ b/smali/com/android/server/SystemServer$$ExternalSyntheticLambda10.smali
-@@ -149,37 +149,6 @@
+@@ -180,37 +180,6 @@
      invoke-virtual {v2}, Landroid/util/TimingsTraceLog;->traceEnd()V
  
      :cond_0
