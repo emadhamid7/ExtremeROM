@@ -196,6 +196,7 @@ system/etc/preferred-apps/com.samsung.android.bixby.agent.xml
 "
 # fabriccrypto bullshit
 SYSTEM_DEBLOAT+="
+system/priv-app/KmxService
 system/bin/fabric_crypto
 system/framework/FabricCryptoLib.jar
 system/lib64/com.samsung.security.fabric.cryptod-V1-cpp.so
