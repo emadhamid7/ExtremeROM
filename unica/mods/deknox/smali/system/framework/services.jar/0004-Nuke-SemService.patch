@@ -39,7 +39,7 @@ index cf1145e5df..4732a2d63c 100644
 -    :goto_0
 -    invoke-virtual {v2}, Landroid/util/TimingsTraceLog;->traceEnd()V
 -
-     const-string v3, "Blockchain Service"
+     const-string v3, "SemAuthnrService"
  
      invoke-virtual {v2, v3}, Lcom/android/server/utils/TimingsTraceAndSlog;->traceBegin(Ljava/lang/String;)V
 -- 
