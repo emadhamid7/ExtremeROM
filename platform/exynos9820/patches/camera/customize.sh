@@ -36,19 +36,6 @@ ADD_TO_WORK_DIR "pa3qzcx" "system" "system/lib64/libstagefright.so" 0 0 644 "u:o
 HEX_PATCH "$WORK_DIR/system/system/lib64/libstagefright.so" "010140f9cf390594a0500034" "010140f91f2003d51f2003d5"
 LOG_STEP_OUT
 
-LOG_STEP_IN "- Adding SWISP models"
-DELETE_FROM_WORK_DIR "vendor" "saiv/swisp_1.0"
-ADD_TO_WORK_DIR "$SOURCE_FIRMWARE" "vendor" "saiv/swisp_1.0"
-LOG_STEP_OUT
-
-LOG_STEP_IN "- Cleaning SamsungCamera OAT"
-DELETE_FROM_WORK_DIR "system" "system/priv-app/SamsungCamera/SamsungCamera.apk.prof"
-LOG_STEP_OUT
-
-LOG_STEP_IN "- Adding SingleTake models"
-DELETE_FROM_WORK_DIR "vendor" "etc/singletake"
-ADD_TO_WORK_DIR "$SOURCE_FIRMWARE" "vendor" "etc/singletake"
-
 # shellcheck disable=SC2046
 wait $(jobs -p) || exit 1
 
