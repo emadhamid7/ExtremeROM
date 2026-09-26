@@ -152,37 +152,13 @@ fi
 
 if ! $SOURCE_HAS_HW_MDNIE; then
     if $TARGET_HAS_HW_MDNIE; then
-        LOG_STEP_IN "- Applying HW mDNIe patches"
-
-        DECODE_APK "system" "system/framework/framework.jar"
-        DECODE_APK "system" "system/framework/services.jar"
-        DECODE_APK "system_ext" "priv-app/SystemUI/SystemUI.apk"
-
-        SET_FLOATING_FEATURE_CONFIG "SEC_FLOATING_FEATURE_LCD_SUPPORT_MDNIE_HW" "TRUE"
-        SET_FLOATING_FEATURE_CONFIG "SEC_FLOATING_FEATURE_COMMON_SUPPORT_COLOR_LENS" "TRUE"
-        APPLY_PATCH "system" "system/framework/framework.jar" "$SRC_DIR/unica/patches/product_feature/mdnie/hw/framework.jar/0001-Enable-HW-mDNIe.patch"
-        APPLY_PATCH "system" "system/framework/services.jar" "$SRC_DIR/unica/patches/product_feature/mdnie/hw/services.jar/0001-Enable-HW-mDNIe.patch"
-        APPLY_PATCH "system" "system/priv-app/SecSettings/SecSettings.apk" "$SRC_DIR/unica/patches/product_feature/mdnie/hw/SecSettings.apk/0001-Enable-EAD-Settings.patch"
-        APPLY_PATCH "system_ext" "priv-app/SystemUI/SystemUI.apk" "$SRC_DIR/unica/patches/product_feature/mdnie/hw/SystemUI.apk/0001-Add-EAD-APK-Support.patch"
-        APPLY_PATCH "system_ext" "priv-app/SystemUI/SystemUI.apk" "$SRC_DIR/unica/patches/product_feature/mdnie/hw/SystemUI.apk/0002-Enable-EAD-Quick-Panel-Toggle.patch"
-        ADD_TO_WORK_DIR "e2sxxx" "system" "system/bin/mafpc_write" 0 2000 755 "u:object_r:mafpc_write_exec:s0"
-        ADD_TO_WORK_DIR "e2sxxx" "system" "system/etc/permissions/privapp-permissions-com.samsung.android.sead.xml" 0 0 644 "u:object_r:system_file:s0"
-        ADD_TO_WORK_DIR "e2sxxx" "system" "system/priv-app/EnvironmentAdaptiveDisplay"
-        LOG_STEP_OUT
+        LOG "- Skipping HW mDNIe patches (disabled: patches removed)"
     fi
 fi
 
 if ! $SOURCE_MDNIE_SUPPORT_HDR_EFFECT; then
     if $TARGET_MDNIE_SUPPORT_HDR_EFFECT; then
-        LOG_STEP_IN "- Applying mDNIe HDR effect patches"
-
-        DECODE_APK "system" "system/priv-app/SettingsProvider/SettingsProvider.apk"
-
-        SET_FLOATING_FEATURE_CONFIG "SEC_FLOATING_FEATURE_COMMON_SUPPORT_HDR_EFFECT" "TRUE"
-        SET_FLOATING_FEATURE_CONFIG "SEC_FLOATING_FEATURE_MMFW_SUPPORT_HW_HDR" "TRUE"
-        APPLY_PATCH "system" "system/priv-app/SecSettings/SecSettings.apk" "$SRC_DIR/unica/patches/product_feature/mdnie/hdr/SecSettings.apk/0001-Enable-HDR-Settings.patch"
-        APPLY_PATCH "system" "system/priv-app/SettingsProvider/SettingsProvider.apk" "$SRC_DIR/unica/patches/product_feature/mdnie/hdr/SettingsProvider.apk/0001-Enable-HDR-Settings.patch"
-        LOG_STEP_OUT
+        LOG "- Skipping mDNIe HDR effect patches (disabled: patch removed)"
     fi
 fi
 
