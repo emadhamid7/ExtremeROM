@@ -1,0 +1,4 @@
+id=hwui
+name=Fix Black Recents
+author=Emad
+description=Adds hwui.so blobs from A146B/INS temporarily.
