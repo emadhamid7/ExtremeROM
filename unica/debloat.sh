@@ -46,10 +46,13 @@ priv-app/Turbo
 
 SYSTEM_DEBLOAT+="
 system/app/ARCore
+system/app/BBCAgent
+system/app/BookmarkProvider
 system/app/CarrierDefaultApp
 system/app/Cameralyzer
 system/app/ccinfo
 system/app/ChromeCustomizations
+system/app/DictDiotekForSec
 system/app/EasterEgg
 system/app/FactoryCameraFB
 system/app/Fast
@@ -86,6 +89,7 @@ system/app/SamsungTTSVoice_th_TH_f00
 system/app/SamsungTTSVoice_vi_VN_f00
 system/app/SilentLog
 system/app/SimAppDialog
+system/app/SimMobilityKit
 system/app/SmartReminder
 system/app/SmartSwitchAgent
 system/app/SmartSwitchStub
