@@ -1,0 +1,2 @@
+/system/lib/hwui\.so u:object_r:system_file:s0
+/system/lib64/hwui\.so u:object_r:system_file:s0
