@@ -40,13 +40,22 @@ jobs:
           DEBIAN_FRONTEND=noninteractive sudo apt install -yq \
             p7zip-full jq attr ccache clang ffmpeg golang \
             libbrotli-dev libgtest-dev libprotobuf-dev libunwind-dev libpcre2-dev \
-            libzstd-dev linux-modules-extra-$(uname -r) lld protobuf-compiler webp \
+            libzstd-dev lld protobuf-compiler webp \
             curl xxd patchelf flex bison libarchive-tools build-essential pcre2-utils
-          sudo modprobe erofs f2fs
+          sudo modprobe erofs || true
+          sudo modprobe f2fs || true
+          grep -E 'erofs|f2fs' /proc/filesystems || echo "WARNING: erofs/f2fs not available in kernel"
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
           echo -n "${{ secrets.PLATFORM_KEY_PK8 }}" | base64 --decode > security/extremerom_platform.pk8
           echo -n "${{ secrets.PLATFORM_KEY_PEM }}" | base64 --decode > security/extremerom_platform.x509.pem
+
+      - name: Set up rclone
+        run: |
+          curl -fsSL https://rclone.org/install.sh | sudo bash
+          mkdir -p ~/.config/rclone
+          printf '%s' '${{ secrets.RCLONE_CONF }}' > ~/.config/rclone/rclone.conf
+          rclone listremotes
 
       - name: Set up JDK 21
         uses: actions/setup-java@v6
@@ -85,17 +94,66 @@ jobs:
           source ./buildenv.sh ${{ matrix.target }}
           ./scripts/make_rom.sh --force
 
-      - name: Upload to GoFile
+      - name: Upload to GoFile and Google Drive
         run: |
           ZIP_FILE=$(find out -maxdepth 1 -type f -name "*.zip" | head -n 1)
+          [ -n "$ZIP_FILE" ] || { echo "No zip found in out/"; exit 1; }
+          NAME=$(basename "$ZIP_FILE")
 
-          RESPONSE=$(curl -s -F "file=@$ZIP_FILE" -F "token=${{ secrets.GOFILE_TOKEN }}" -F "folderId=${{ secrets.GOFILE_FOLDER_ID }}" "https://upload-eu-par.gofile.io/uploadFile")
+          echo "MD5:";    md5sum "$ZIP_FILE"
+          echo "SHA256:"; sha256sum "$ZIP_FILE"
 
-          echo "Uploaded successfully! Download link:"
-          echo "$RESPONSE" | jq -r '.data.downloadPage'
+          # GoFile
+          RESPONSE=$(curl -s -F "file=@$ZIP_FILE" \
+            -F "token=${{ secrets.GOFILE_TOKEN }}" \
+            -F "folderId=${{ secrets.GOFILE_FOLDER_ID }}" \
+            "https://upload-eu-par.gofile.io/uploadFile")
+          GOFILE_LINK=$(echo "$RESPONSE" | jq -r '.data.downloadPage')
+          echo "GoFile: $GOFILE_LINK"
 
-          echo "MD5:"
-          md5sum "$ZIP_FILE"
+          # Google Drive
+          DEST="mydrive:ExtremeROM/run-${{ github.run_number }}"
+          rclone copy "$ZIP_FILE" "$DEST" --progress
+          GDRIVE_LINK=$(rclone link "$DEST/$NAME")
+          echo "Drive: $GDRIVE_LINK"
 
-          echo "SHA256:"
-          sha256sum "$ZIP_FILE"
+          # Save links for the release job
+          mkdir -p links
+          {
+            echo "### ${{ matrix.target }}"
+            echo "- [GoFile]($GOFILE_LINK)"
+            echo "- [Google Drive]($GDRIVE_LINK)"
+            echo
+          } > "links/${{ matrix.target }}.md"
+
+      - name: Upload links artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: links-${{ matrix.target }}
+          path: links/${{ matrix.target }}.md
+
+  release:
+    needs: build
+    if: ${{ !cancelled() }}
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+
+    steps:
+      - name: Download links
+        uses: actions/download-artifact@v5
+        with:
+          pattern: links-*
+          path: links
+          merge-multiple: true
+
+      - name: Create release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          [ -n "$(ls links/*.md 2>/dev/null)" ] || { echo "No links, skipping release"; exit 0; }
+          cat links/*.md > notes.md
+          gh release create "build-${{ github.run_number }}" \
+            --repo "${{ github.repository }}" \
+            --title "ExtremeROM build ${{ github.run_number }}" \
+            --notes-file notes.md
